@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block titlebar %}
+{% include "_partials/header.html" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="full-height-wrapper">
+	<div class="dashboard-area">
+
+	{% include "_partials/dashboard_articles.html" %}
+	{% include "_partials/dashboard_projects.html" %}
+
+	</div>
+
+</div>
+
+	{% endblock %}
+
+{% block sidebar %}
+	{% with dashboard_part="MAIN" %}
+		{% include '_partials/dashboard_sidebar.html' %}
+	{% endwith %}
+{% endblock %}
+
+
+

@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block titlebar %}
+{% with header_context="ABOUT" %}
+{% include '_partials/header.html' %}
+{% endwith %}
+{% endblock %}
+
+{% block content %}
+
+
+		{% if user.about  %}
+
+<div class="col-md-8 col-md-offset-2" id="about-wrapper">
+	<article class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
+
+			{% if portrait %}
+			<img src="{{ url_for('send_image', filename = portrait) }}" id="about-portrait" alt="portrait"/>
+
+			{% else %}
+			<div class="col-xs-12" id="about-fill"> </div>
+
+			{% endif %}
+
+			{% if user.real_name %}
+
+			<h2 class="text-center" id="about-realname">{{ user.real_name }}</h2>
+
+			{% endif %}
+
+
+			<div class="basic-typography" style="clear: both" id="about-body">{{ user.about | markdown }}</div>
+
+		</div>
+
+		</article>
+		</div>
+
+		{% else %}
+
+			<div class="empty-container vertical-center">
+				<img src="{{ url_for('static', filename = config.STATIC_ROOT + 'img/subrosa.jpg')}}" alt="">
+				<h4>About page is empty</h4>
+
+			</div>
+
+
+		{% endif %}
+
+
+{% endblock %}
+
+{% block footer %}
+{% include '_partials/footer.html' %}
+{% endblock %}
+
+

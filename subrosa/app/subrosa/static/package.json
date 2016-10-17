@@ -1,0 +1,20 @@
+{
+  "name": "Subrosa",
+  "version": "0.0.1",
+  "description": "Blogging platform for elegant hackers",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Konrad Wasowicz",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-less": "~0.9.0",
+    "grunt-contrib-cssmin": "^0.9.0",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-contrib-concat": "^0.3.0"
+  }
+}

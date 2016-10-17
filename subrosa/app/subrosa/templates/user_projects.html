@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block titlebar %}
+
+{% with header_context="PROJECTS" %}
+{% include '_partials/header.html' %}
+{% endwith %}
+{% endblock %}
+
+{% block content %}
+
+
+{% if projects %}
+
+<div class="col-md-8 col-md-offset-2" id="user-projects">
+	<article class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
+		{% for project in projects %}
+		<article class="project-wrapper row">
+			<div class="project-title"><h1 class="text-center">{{ project.title }}</h1></div>
+			<div class="project-timesince"><h5 class="text-center">{{ project.date_created.strftime("%d %B %Y")}}</h5></div>
+			<div class="project-body basic-typography">{{ project.body | markdown }}</div>
+		</article>
+		{% endfor %}
+	</div>
+</article>
+</div>
+{% else %}
+<div class="empty-container vertical-center">
+	<img src="{{ url_for('static', filename = config.STATIC_ROOT + 'img/subrosa.jpg')}}" alt="">
+	<h4>No projects added yet</h4>
+	
+</div>
+
+{% endif %}
+
+
+{% endblock %}
+{% block footer %}
+{% include '_partials/footer.html' %}
+{% endblock %}

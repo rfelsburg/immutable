@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+
+from __future__ import print_function
+from subrosa import db, app
+from subrosa.models.ArticlesModel import (Articles,
+                                          Categories,
+                                          ArticleCategories)
+from subrosa.models.UserImagesModel import UserImages
+from subrosa.models.UsersModel import Users
+from subrosa.models.UserProjectsModel import UserProjects
+from subrosa.models.ConfigModel import ConfigModel
+
+db.connect()
+app.config["DEBUG"] = False
+try:
+    for field in (Users, Articles, UserImages,
+                  UserProjects, ConfigModel,
+                  Categories, ArticleCategories):
+        if not field.table_exists():
+            field.create_table()
+        else:
+            print("Table already exists")
+
+    print ("Tables created")
+
+except Exception as e:
+
+    print("Error occured when Creating database")
+    print("Error details: \n")
+    print(e)
+    raise Exception
+
+    
+

@@ -1,0 +1,3 @@
+recursive-include main/templates *
+recursive-include main/static *
+recursive-include main/models *

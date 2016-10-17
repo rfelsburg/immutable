@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+
+from __future__ import print_function
+from subrosa import db, app
+from subrosa.models.ArticlesModel import Articles
+from subrosa.models.UserImagesModel import UserImages
+from subrosa.models.UsersModel import Users
+from subrosa.models.UserProjectsModel import UserProjects
+
+for field in (Articles, UserImages, Users, UserProjects):
+
+    if not field.table_exists():
+        raise Exception("Table %s doesn\'t exist" % repr(field))
+
+
+print("All tables OK")

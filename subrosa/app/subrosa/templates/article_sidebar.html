@@ -1,0 +1,55 @@
+<div class="article-sidebar">
+
+	{% if settings.show_info %}
+	<div class="user-info xs-hidden sm-hidden">
+		{% if user_portrait %}
+		<div class="portrait-holder" style="background-image: url({{ url_for('send_image', filename = user_portrait) }})"> </div>
+		{% endif %}
+		{% if author.real_name %}
+		<span class="real-name">{{ author.real_name }}</span>
+		{% endif %}
+		<div class="user-desc">
+			<p>{{ author.description }}</p>
+		</div>
+	</div>
+	{% if settings.twitter_username %}
+	<div style="height: 70px;">
+		<a href="https://twitter.com/{{ settings.twitter_username }}" data-show-screen-name="true" class="twitter-follow-button" data-show-count="false" data-lang="en" data-size="large">{{ settings.twitter_username }}</a>
+	</div>
+	{% endif %}
+
+	{% endif %}
+
+	{% if article_series %}
+	<div class="sidebar-block">
+		<p class="text-muted sidebar-title">{{ article.series }} Series</h4>
+
+			{% for art in article_series %}
+			<div>
+				<a href="{{ url_for('article_view', slug = art.slug )}}" class="{{ 'active' if art.id == article.id }} sidebar-item">
+					{{ art.title }}
+				</a>
+			</div>
+			{% endfor %}
+
+		</div>
+
+
+		{% endif %}
+
+		{% if show_related_articles %}
+
+		<div class="sidebar-block">
+			<p class="sidebar-title">related articles</p>
+			{% for related in related_articles %}
+			<div>
+				<a href="{{ url_for('article_view', slug = related.slug ) }}" class="sidebar-item">
+					{{ related.title }}
+				</a>
+				<p class="sidebar-date">{{ related.date_created.strftime("%d %B %Y")}}</p>
+			</div>
+			{% endfor %}
+		</div>
+		{% endif %}
+
+	</div>

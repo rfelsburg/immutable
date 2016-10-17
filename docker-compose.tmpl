@@ -1,0 +1,85 @@
+version: "2"
+services:
+  postgres-data:
+    image: busybox:latest
+    volumes:
+      - /var/lib/postgresql
+    command: "true"
+
+  postgres:
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=<POSTGRES_ROOT_PASS>
+      - DB_USER=<SUBROSA_USER>
+      - DB_PASSWORD=<SUBROSA_PASS>
+      - DB_NAME=<SUBROSA_DB>
+    volumes_from:
+      - postgres-data
+    networks:
+      - backend
+    build: ./postgres
+
+  subrosa_1:
+    build: ./subrosa
+    expose:
+      - "8000"
+    links:
+      - postgres:postgres
+    environment:
+      - DATABASE_URL=postgres://<SUBROSA_USER>:<SUBROSA_PASS>@postgres:5432/<SUBROSA_DB>
+    depends_on:
+      - postgres
+    networks:
+      - backend
+    command: /bin/bash /entrypoint.sh
+
+  subrosa_2:
+    build: ./subrosa
+    expose:
+      - "8000"
+    links:
+      - postgres:postgres
+    environment:
+      - DATABASE_URL=postgres://<SUBROSA_USER>:<SUBROSA_PASS>@postgres:5432/<SUBROSA_DB>
+    depends_on:
+      - postgres
+    networks:
+      - backend
+    command: /bin/bash /entrypoint.sh
+
+  subrosa_3:
+    build: ./subrosa
+    expose:
+      - "8000"
+    links:
+      - postgres:postgres
+    environment:
+      - DATABASE_URL=postgres://<SUBROSA_USER>:<SUBROSA_PASS>@postgres:5432/<SUBROSA_DB>
+    depends_on:
+      - postgres
+    networks:
+      - backend
+    command: /bin/bash /entrypoint.sh
+
+  haproxy:
+    build: haproxy
+    ports:
+      - "80:80"
+      - "81:81"
+    depends_on:
+      - subrosa_1
+      - subrosa_2
+      - subrosa_3
+    links:
+      - subrosa_1:subrosa_1
+      - subrosa_2:subrosa_2
+      - subrosa_3:subrosa_3
+    networks:
+      - frontend
+      - backend
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge

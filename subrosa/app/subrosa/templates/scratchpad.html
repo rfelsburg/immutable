@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+{% block additional_headers %}
+
+<!-- disable caching on this page -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+
+{% endblock %}
+
+{% block content %} 
+
+<div class="warning-holder">
+
+	{% if error %}
+	<div class="alert alert-dismissable alert-danger col-xs-4 col-xs-offset-4" style="margin-top: 48px">
+		<button class="close" data-dismiss="alert">x</button>
+		<i class="icon-attention"></i><strong>Error: </strong><p>{{ error }}</p>
+	</div>
+	{% endif %}
+
+</div>
+<div class="article-entry col-md-8 col-md-offset-2">
+	<form action="" method="POST" role="form" enctype="multipart/form-data" class="new-article-form" accept-charset="utf-8">
+		{% if show_title %}
+		<div class="form-group">
+			<textarea name="title" id="article-input-title" class="article-input-title article-input scratch" placeholder="{{ title_placeholder }}">{{ title }}</textarea>
+		</div>
+		{% else %}
+		<div style="height: 100px;"></div>
+		{% endif %}
+
+		<div class="form-group">
+			<textarea id="article-input-body" class="article-input-body article-input scratch" name="body"  rows="16" placeholder="{{ body_placeholder }}">{{ body }}</textarea>
+		</div>
+
+		{% if additional_controls %}
+		{% include "_partials/additional_controls.html" %}
+		{% endif %}
+
+		<input type="submit" value="" style="display: none"  />
+	</form>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+{% with additional_controls = additional_controls %}
+{% include "_partials/editing_tools.html" %}
+{% endwith %}
+{% endblock %}
+
+{% block modals %}
+{% include '_partials/mkd-cheatsheet.html' %}
+{% endblock %}
